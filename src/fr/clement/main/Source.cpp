@@ -1,10 +1,9 @@
-#include "..//..//..//..//bin/fr/clement/gameEngine/GameEngine.h"
-
+#include"..//..//..//..//bin/fr/clement/gameEngine/GameEngine.h"
 
 int main()
 {
 	
-	GameEngine* ge = new GameEngine();
-	ge->gameLoop();
+	GameEngine* ge=new GameEngine();
+
 	return 0;
 }
