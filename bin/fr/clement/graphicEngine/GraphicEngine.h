@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+
 #include "../../../../bin/fr/clement/widget/TileMap.h"
 #include "../../../../bin/fr/clement/widget/ClassSprite.h"
 

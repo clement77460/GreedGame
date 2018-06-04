@@ -1,6 +1,6 @@
 
 #include <SFML/graphics.hpp>
-using namespace sf;
+
 
 class TileMap:public sf::Drawable, public sf::Transformable
 {
