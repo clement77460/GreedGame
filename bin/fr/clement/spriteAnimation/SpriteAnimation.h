@@ -1,3 +1,6 @@
+#ifndef SPRITEANIMATION_H_
+#define SPRITEANIMATION_H_
+#pragma once
 
 enum directions {
 	down,
@@ -22,3 +25,4 @@ private:
 	
 };
 
+#endif

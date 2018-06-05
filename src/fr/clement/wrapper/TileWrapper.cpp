@@ -1,5 +1,5 @@
 #include "..\..\..\..\bin\fr\clement\wrapper\TileWrapper.h"
-
+#include<string>
 
 TileWrapper::TileWrapper()
 {

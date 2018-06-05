@@ -1,5 +1,6 @@
 #include "../../../../bin/fr/clement/widget/TileMap.h"
 
+
 TileMap::TileMap()
 {
 }
@@ -8,30 +9,23 @@ TileMap::~TileMap()
 {
 }
 
-void TileMap::loadTiles(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height)
-{
-	// on charge la texture du tileset
-	if (!m_tileset.loadFromFile(tileset)) {
-		std::printf("erreur");
-	}
-	m_tileset.setSmooth(true);
-	
+void TileMap::loadTiles(const std::string& tileset, sf::Vector2u tileSize, const int* tilesType,
+	unsigned int width, unsigned int height, TileWrapper** tiles)
+{	
+
+	this->loadTexture(tileset);
 
 	// on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
 	m_vertices.setPrimitiveType(sf::Quads);
 	m_vertices.resize(width * height * 4);
-
+	
 	for (unsigned int i = 0; i < width; ++i) {
 		for (unsigned int j = 0; j < height; ++j) {
 
+			this->setUpTiles(tileSize, tilesType[i + j * width],i,j,tiles);
+
 			sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
-
-			quad[0].position = sf::Vector2f((i)*tileSize.x, (j)*tileSize.y);//0*x
-			quad[1].position = sf::Vector2f((i+1)*tileSize.x, (j)*tileSize.y);
-			quad[2].position = sf::Vector2f((i+1)*tileSize.x, (j + 1)*tileSize.y);
-			quad[3].position = sf::Vector2f((i)*tileSize.x, (j + 1)*tileSize.y);
-
-			this->setTextureOnQuad(quad,tiles[i+j*width]);
+			this->setUpQuad(quad, tileSize, tilesType[i + j * width], i, j, width);
 
 		}
 	}
@@ -62,6 +56,32 @@ void TileMap::setTextureOnQuad(sf::Vertex *quad,int indice) {
 		break;
 	}
 	
+}
+
+void TileMap::loadTexture(const std::string& tileset)
+{
+	// on charge la texture du tileset
+	if (!m_tileset.loadFromFile(tileset)) {
+		std::printf("erreur");
+	}
+	m_tileset.setSmooth(true);
+}
+
+void TileMap::setUpQuad(sf::Vertex* quad, sf::Vector2u tileSize, const int tileType, 
+	const int line, const int col, const int width)
+{
+	quad[0].position = sf::Vector2f((line)*tileSize.x, (col)*tileSize.y);
+	quad[1].position = sf::Vector2f((line + 1)*tileSize.x, (col)*tileSize.y);
+	quad[2].position = sf::Vector2f((line + 1)*tileSize.x, (col + 1)*tileSize.y);
+	quad[3].position = sf::Vector2f((line)*tileSize.x, (col + 1)*tileSize.y);
+
+	this->setTextureOnQuad(quad, tileType);
+}
+
+void TileMap::setUpTiles(sf::Vector2u tileSize, const int tilesType, const int line, const int col, TileWrapper** tiles)
+{
+	tiles[col][line].setPosition((line)*tileSize.x, (col)*tileSize.y);
+	tiles[col][line].setSize(sf::Vector2f(tileSize.x,tileSize.y));
 }
 
 void TileMap::draw(sf::RenderTarget & target, sf::RenderStates states) const

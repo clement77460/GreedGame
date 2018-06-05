@@ -1,23 +1,30 @@
+#ifndef GRAPHICENGINE_H_
+#define GRAPHICENGINE_H_
+#pragma once
 
-#include "../../../../bin/fr/clement/widget/TileMap.h"
-#include "../../../../bin/fr/clement/widget/ClassSprite.h"
+#include<SFML/Graphics.hpp>
+
+#include"../widget/ClassSprite.h"
+#include"../controller/Controller.h"
+#include"../widget/TileMap.h"
 
 class GraphicEngine
 {
 public:
 	GraphicEngine();
 	~GraphicEngine();
-	void gameLoop();
+	void gameLoop(Controller controller);
+	void createMap(TileWrapper** tiles);
 
 private:
 	const int fps = 5; //5 images par secondes
 	sf::Clock clock;
-	sf::RenderWindow* window;
+	sf::RenderWindow* window=NULL;
 	TileMap map;
-	ClassSprite* sprite;
+	ClassSprite* sprite=NULL;
 
 	void createSprite();
-	void createMap();
 	void updateEngine();
 };
 
+#endif

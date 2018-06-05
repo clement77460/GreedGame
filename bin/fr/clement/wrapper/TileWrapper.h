@@ -1,12 +1,19 @@
-#include<string>
+#ifndef TILEWRAPPER_H_
+#define TILEWRAPPER_H_
+#pragma once
 
-class TileWrapper
+#include<SFML/Graphics.hpp>
+
+class TileWrapper:public sf::RectangleShape
 {
 public:
 	TileWrapper();
 	~TileWrapper();
 
+
 private:
 
 };
+
+#endif
 

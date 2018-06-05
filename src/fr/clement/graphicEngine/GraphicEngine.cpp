@@ -1,9 +1,9 @@
 #include "..//..//..//..//bin/fr/clement/graphicEngine/GraphicEngine.h"
 
+
 GraphicEngine::GraphicEngine()
 {
-	this->window=new RenderWindow(sf::VideoMode(800, 500), "GreedGame");
-	this->createMap();
+	this->window=new sf::RenderWindow(sf::VideoMode(800, 500), "GreedGame");
 	this->createSprite();
 }
 
@@ -12,15 +12,17 @@ GraphicEngine::~GraphicEngine()
 {
 }
 
-void GraphicEngine::gameLoop()
+void GraphicEngine::gameLoop(Controller controller)
 {
-	while (window->isOpen())
+	while (this->window->isOpen())
 	{
-		sf::Event event;
-		while (window->pollEvent(event))
+		
+		while (window->pollEvent(controller))
 		{
-			if (event.type == sf::Event::Closed)
-				window->close();
+			
+			if (controller.type == sf::Event::Closed)
+				this->window->close();
+			
 
 			
 		}
@@ -50,9 +52,10 @@ void GraphicEngine::createSprite()
 	sprite->loadTexture("..//image/sprites//war.png");
 }
 
-void GraphicEngine::createMap()
+void GraphicEngine::createMap(TileWrapper** tiles)
 {
 	//Permet de définir les tuiles
+	
 	int level[]{
 		0,1,1,3,3,3,1,0,
 		0,1,1,3,3,3,1,0,
@@ -60,7 +63,6 @@ void GraphicEngine::createMap()
 		0,1,1,1,1,1,1,0,
 		0,1,1,1,1,1,1,0
 	};
-	map.loadTiles("..//image//textureSet.jpg", Vector2u(100, 100), level, 8, 5);
-
+	map.loadTiles("..//image//textureSet.jpg", sf::Vector2u(100, 100), level, 8, 5,tiles);
 
 }

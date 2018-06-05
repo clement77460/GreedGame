@@ -1,7 +1,9 @@
+#ifndef CLASSPRITE_H_
+#define CLASSPRITE_H_
+#pragma once
+
 #include <SFML/graphics.hpp>
 #include "..//..//..//..//bin/fr/clement/spriteAnimation/SpriteAnimation.h"
-
-using namespace sf;
 
 class ClassSprite 
 {
@@ -20,4 +22,6 @@ private:
 	sf::Sprite sprite;
 	SpriteAnimation* anim;
 };
+
+#endif
 

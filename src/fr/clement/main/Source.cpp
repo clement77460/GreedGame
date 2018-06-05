@@ -4,6 +4,6 @@ int main()
 {
 	
 	GameEngine* ge=new GameEngine();
-
+	delete ge;
 	return 0;
 }
