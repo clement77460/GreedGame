@@ -1,9 +1,12 @@
-#include"..//..//..//..//bin/fr/clement/gameEngine/GameEngine.h"
+#include"..//..//..//..//bin/fr/clement/controller/Controller.h"
 
 int main()
 {
 	
-	GameEngine* ge=new GameEngine();
-	delete ge;
+	GameEngine ge;
+	GraphicEngine graphicEngine(ge);
+	Controller controller(ge, graphicEngine);
+	controller.onLoad();
+
 	return 0;
 }

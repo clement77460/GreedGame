@@ -2,24 +2,24 @@
 #define GAMEENGINE_H
 #pragma once
 
-#include"../graphicEngine/GraphicEngine.h"
-
+#include"../wrapper/TileWrapper.h"
 class GameEngine
 {
 public:
 	GameEngine();
 	~GameEngine();
-	
+	void launchGraphicEngine();
+	TileWrapper** getTiles();
 
 private:
-	GraphicEngine * ge=NULL;
-	TileWrapper** tiles=NULL;
-	Controller controller;
-
-	void launchGraphicEngine();
 	
-	const int nbXTiles = 5;
-	const int nbYTiles = 8;
+	TileWrapper** tiles=NULL;
+	std::string data;
+
+	
+	
+	int nbXTiles = 5;
+	int nbYTiles = 8;
 };
 #endif
 

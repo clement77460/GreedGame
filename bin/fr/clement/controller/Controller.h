@@ -2,16 +2,17 @@
 #define CONTROLLER_H
 #pragma once
 
-#include "SFML/Graphics.hpp"
-
-class Controller: public sf::Event
+#include"../graphicEngine/GraphicEngine.h"
+class Controller
 {
 public:
-	Controller();
+	Controller(const GameEngine &gameEngine,const GraphicEngine &graphicEngine);
+	void onLoad();
 	~Controller();
 
 private :
-	
+	GameEngine gameEngine;
+	GraphicEngine graphicEngine;
 };
 
 
