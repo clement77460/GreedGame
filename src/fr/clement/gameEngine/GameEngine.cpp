@@ -1,21 +1,13 @@
 #include "..\..\..\..\bin\fr\clement\gameEngine\GameEngine.h"
-
+#include <string>
 
 GameEngine::GameEngine()
 {
-		
-	this->ge = new GraphicEngine();
-	this->launchGraphicEngine();
 }
 
 GameEngine::~GameEngine()
 {
-	
-	for (int i = 0; i < 5; i++) {
-		delete[] tiles[i];
-	}
 	delete[] tiles;
-	delete ge;
 }
 
 void GameEngine::launchGraphicEngine()
@@ -23,10 +15,11 @@ void GameEngine::launchGraphicEngine()
 	this->tiles = new TileWrapper*[nbXTiles];
 	for (int i = 0; i < 5; i++) {
 		this->tiles[i] = new TileWrapper[nbYTiles];
+		this->tiles[i]->setPosition(0, 0);
 	}
+}
 
-	
-
-	ge->createMap(this->tiles);
-	ge->gameLoop(controller);
+TileWrapper ** GameEngine::getTiles()
+{
+	return this->tiles;
 }

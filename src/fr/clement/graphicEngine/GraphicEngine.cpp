@@ -1,22 +1,27 @@
 #include "..//..//..//..//bin/fr/clement/graphicEngine/GraphicEngine.h"
 
 
-GraphicEngine::GraphicEngine()
-{
-	this->window=new sf::RenderWindow(sf::VideoMode(800, 500), "GreedGame");
+GraphicEngine::GraphicEngine(const GameEngine &gameEngine)
+{ 
+	this->gameEngine = gameEngine;
+	this->window = new sf::RenderWindow(sf::VideoMode(800, 500), "GreedGame");
 	this->createSprite();
 }
-
+GraphicEngine::GraphicEngine()
+{
+}
 
 GraphicEngine::~GraphicEngine()
 {
+	//delete window;
+	//delete sprite;
 }
 
-void GraphicEngine::gameLoop(Controller controller)
+void GraphicEngine::gameLoop()
 {
 	while (this->window->isOpen())
 	{
-		
+		sf::Event controller;
 		while (window->pollEvent(controller))
 		{
 			
@@ -47,9 +52,10 @@ void GraphicEngine::updateEngine() {
 
 void GraphicEngine::createSprite()
 {
-	
+		
 	this->sprite = new ClassSprite();
 	sprite->loadTexture("..//image/sprites//war.png");
+	std::printf("creation du sprite");
 }
 
 void GraphicEngine::createMap(TileWrapper** tiles)

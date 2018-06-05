@@ -5,23 +5,25 @@
 #include<SFML/Graphics.hpp>
 
 #include"../widget/ClassSprite.h"
-#include"../controller/Controller.h"
 #include"../widget/TileMap.h"
-
+#include"../gameEngine/GameEngine.h"
 class GraphicEngine
 {
 public:
+	GraphicEngine(const GameEngine &gameEngine0);
 	GraphicEngine();
 	~GraphicEngine();
-	void gameLoop(Controller controller);
+	void gameLoop();
 	void createMap(TileWrapper** tiles);
 
 private:
-	const int fps = 5; //5 images par secondes
 	sf::Clock clock;
 	sf::RenderWindow* window=NULL;
+
+	int fps = 5; //5 images par secondes
+	ClassSprite* sprite = NULL;
 	TileMap map;
-	ClassSprite* sprite=NULL;
+	GameEngine gameEngine;
 
 	void createSprite();
 	void updateEngine();
