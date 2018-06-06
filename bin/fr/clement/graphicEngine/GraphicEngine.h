@@ -2,11 +2,13 @@
 #define GRAPHICENGINE_H_
 #pragma once
 
-#include<SFML/Graphics.hpp>
-
-#include"../widget/ClassSprite.h"
 #include"../widget/TileMap.h"
 #include"../gameEngine/GameEngine.h"
+#include<SFML/Graphics.hpp>
+#include"../widget/ClassSprite.h"
+
+
+class Controller;
 class GraphicEngine
 {
 public:
@@ -19,7 +21,7 @@ public:
 private:
 	sf::Clock clock;
 	sf::RenderWindow* window=NULL;
-
+	Controller* c;
 	int fps = 5; //5 images par secondes
 	ClassSprite* sprite = NULL;
 	TileMap map;

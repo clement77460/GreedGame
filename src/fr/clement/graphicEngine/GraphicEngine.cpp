@@ -1,3 +1,4 @@
+#include"../../../../bin/fr/clement/controller/Controller.h"//en premier pour la dépendance cyclique !!
 #include "..//..//..//..//bin/fr/clement/graphicEngine/GraphicEngine.h"
 
 
