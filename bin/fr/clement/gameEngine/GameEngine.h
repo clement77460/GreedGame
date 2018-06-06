@@ -3,6 +3,8 @@
 #pragma once
 
 #include"../wrapper/TileWrapper.h"
+
+
 class GameEngine
 {
 public:
@@ -15,7 +17,7 @@ private:
 	
 	TileWrapper** tiles=NULL;
 	std::string data;
-
+	
 	
 	
 	int nbXTiles = 5;
