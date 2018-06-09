@@ -3,7 +3,6 @@
 #pragma once
 
 #include"../widget/TileMap.h"
-#include"../gameEngine/GameEngine.h"
 #include<SFML/Graphics.hpp>
 #include"../widget/ClassSprite.h"
 
@@ -12,23 +11,18 @@ class Controller;
 class GraphicEngine
 {
 public:
-	GraphicEngine(const GameEngine &gameEngine0);
 	GraphicEngine();
 	~GraphicEngine();
-	void gameLoop();
-	void createMap(TileWrapper** tiles);
+	void gameLoop(TileMap* map,ClassSprite* sprite);
+	void setController(Controller* controller);
 
 private:
 	sf::Clock clock;
 	sf::RenderWindow* window=NULL;
-	Controller* c;
+	Controller* controller;
 	int fps = 5; //5 images par secondes
-	ClassSprite* sprite = NULL;
-	TileMap map;
-	GameEngine gameEngine;
-
-	void createSprite();
-	void updateEngine();
+	
+	void updateEngine(TileMap* map, ClassSprite* sprite);
 };
 
 #endif

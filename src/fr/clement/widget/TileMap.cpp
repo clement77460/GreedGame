@@ -7,6 +7,8 @@ TileMap::TileMap()
 
 TileMap::~TileMap()
 {
+	
+	std::printf("destructeur de TileMap\n");
 }
 
 void TileMap::loadTiles(const std::string& tileset, sf::Vector2u tileSize, const int* tilesType,
@@ -19,6 +21,7 @@ void TileMap::loadTiles(const std::string& tileset, sf::Vector2u tileSize, const
 	m_vertices.setPrimitiveType(sf::Quads);
 	m_vertices.resize(width * height * 4);
 	
+	
 	for (unsigned int i = 0; i < width; ++i) {
 		for (unsigned int j = 0; j < height; ++j) {
 
@@ -26,9 +29,10 @@ void TileMap::loadTiles(const std::string& tileset, sf::Vector2u tileSize, const
 
 			sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
 			this->setUpQuad(quad, tileSize, tilesType[i + j * width], i, j, width);
-
+			
 		}
 	}
+	
 }
 
 void TileMap::setTextureOnQuad(sf::Vertex *quad,int indice) {

@@ -2,74 +2,59 @@
 #include "..//..//..//..//bin/fr/clement/graphicEngine/GraphicEngine.h"
 
 
-GraphicEngine::GraphicEngine(const GameEngine &gameEngine)
-{ 
-	this->gameEngine = gameEngine;
-	this->window = new sf::RenderWindow(sf::VideoMode(800, 500), "GreedGame");
-	this->createSprite();
-}
+
 GraphicEngine::GraphicEngine()
 {
+	
+	this->window = new sf::RenderWindow(sf::VideoMode(800, 500), "GreedGame");
+
 }
 
 GraphicEngine::~GraphicEngine()
 {
-	//delete window;
-	//delete sprite;
+	std::printf("destructeur de graphic engine\n************************");
+	delete window;
+	
 }
 
-void GraphicEngine::gameLoop()
+void GraphicEngine::gameLoop(TileMap* map, ClassSprite* sprite)
 {
 	while (this->window->isOpen())
 	{
-		sf::Event controller;
-		while (window->pollEvent(controller))
+		sf::Event ev;
+		while (window->pollEvent(ev))
 		{
 			
-			if (controller.type == sf::Event::Closed)
+			if (ev.type == sf::Event::Closed)
 				this->window->close();
-			
-
-			
+			if (ev.type == sf::Event::MouseButtonPressed) {
+				if (ev.mouseButton.button == sf::Mouse::Left)
+					controller->onClick(ev.mouseButton.x, ev.mouseButton.y);
+			}
+				
 		}
-		this->updateEngine();
+		this->updateEngine(map,sprite);
 		
 		
 	}
 }
 
 
-void GraphicEngine::updateEngine() {
+void GraphicEngine::updateEngine(TileMap* map, ClassSprite* sprite) {
 
 	sf::Time elapsed = clock.getElapsedTime();
 	if (elapsed.asMilliseconds() >200 ) { //ToDO ((1/fps)*1000) 
 		clock.restart();
 		window->clear();
-		window->draw(map);
+		window->draw(*map);
 		sprite->draw(*window, 1, 2);
 		window->display();
 	}
 }
 
-void GraphicEngine::createSprite()
-{
-		
-	this->sprite = new ClassSprite();
-	sprite->loadTexture("..//image/sprites//war.png");
-	std::printf("creation du sprite");
-}
 
-void GraphicEngine::createMap(TileWrapper** tiles)
-{
-	//Permet de définir les tuiles
-	
-	int level[]{
-		0,1,1,3,3,3,1,0,
-		0,1,1,3,3,3,1,0,
-		0,1,1,3,3,3,1,0,
-		0,1,1,1,1,1,1,0,
-		0,1,1,1,1,1,1,0
-	};
-	map.loadTiles("..//image//textureSet.jpg", sf::Vector2u(100, 100), level, 8, 5,tiles);
 
+void GraphicEngine::setController(Controller * controller)
+{
+	this->controller = controller;
 }

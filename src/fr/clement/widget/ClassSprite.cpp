@@ -12,6 +12,9 @@ ClassSprite::ClassSprite()
 
 ClassSprite::~ClassSprite()
 {
+	std::printf("destructeur de classSprite\n");
+	delete anim;
+	
 }
 
 void ClassSprite::loadTexture(const std::string & spriteSet)

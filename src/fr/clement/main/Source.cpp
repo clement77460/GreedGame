@@ -4,9 +4,11 @@ int main()
 {
 	
 	GameEngine ge;
-	GraphicEngine graphicEngine(ge);
-	Controller controller(ge, graphicEngine);
+	GraphicEngine graphicEngine;
+
+	Controller controller(&ge, &graphicEngine);
 	controller.onLoad();
+
 
 	return 0;
 }
