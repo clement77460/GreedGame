@@ -86,6 +86,8 @@ void TileMap::setUpTiles(sf::Vector2u tileSize, const int tilesType, const int l
 {
 	tiles[col][line].setPosition((line)*tileSize.x, (col)*tileSize.y);
 	tiles[col][line].setSize(sf::Vector2f(tileSize.x,tileSize.y));
+	tiles[col][line].setTileType(tilesType);
+	tiles[col][line].setCoords(col, line);
 }
 
 void TileMap::draw(sf::RenderTarget & target, sf::RenderStates states) const

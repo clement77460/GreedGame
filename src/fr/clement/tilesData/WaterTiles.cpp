@@ -13,6 +13,10 @@ WaterTiles::~WaterTiles()
 
 bool WaterTiles::isAvailable() const
 {
-	std::printf("water");
 	return false;
+}
+
+void WaterTiles::toString()
+{
+	std::printf("JE SUIS UN WATER AVEC %d SUR MOI\n", this->hasSomeone);
 }

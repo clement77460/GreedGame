@@ -6,5 +6,6 @@ public:
 	GroundTiles();
 	~GroundTiles();
 	virtual bool isAvailable() const;
+	virtual void toString() ;
 };
 

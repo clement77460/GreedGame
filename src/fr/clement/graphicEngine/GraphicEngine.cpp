@@ -17,8 +17,9 @@ GraphicEngine::~GraphicEngine()
 	
 }
 
-void GraphicEngine::gameLoop(TileMap* map, ClassSprite* sprite)
+void GraphicEngine::gameLoop()
 {
+	
 	while (this->window->isOpen())
 	{
 		sf::Event ev;
@@ -28,29 +29,63 @@ void GraphicEngine::gameLoop(TileMap* map, ClassSprite* sprite)
 			if (ev.type == sf::Event::Closed)
 				this->window->close();
 			if (ev.type == sf::Event::MouseButtonPressed) {
-				if (ev.mouseButton.button == sf::Mouse::Left)
-					controller->onClick(ev.mouseButton.x, ev.mouseButton.y);
+				if (ev.mouseButton.button == sf::Mouse::Left) {
+					//controller->onClick(ev.mouseButton.x, ev.mouseButton.y, "war");
+					//recuperer le nom du sprite sur un label rectangle en bas !
+				}
 			}
 				
 		}
-		this->updateEngine(map,sprite);
+		controller->timeToUpdate();
 		
 		
 	}
 }
 
+void GraphicEngine::placementLoop()
+{
+	bool placementAccepted = false;
+	while (this->window->isOpen() && !placementAccepted)
+	{
+		sf::Event ev;
+		while (window->pollEvent(ev))
+		{
 
-void GraphicEngine::updateEngine(TileMap* map, ClassSprite* sprite) {
+			if (ev.type == sf::Event::Closed)
+				this->window->close();
+			if (ev.type == sf::Event::MouseButtonPressed) {
+				if (ev.mouseButton.button == sf::Mouse::Left) {
+					placementAccepted = controller->onPlacementClick(ev.mouseButton.x, ev.mouseButton.y, "war");
+				}
+			}
 
-	sf::Time elapsed = clock.getElapsedTime();
-	if (elapsed.asMilliseconds() >200 ) { //ToDO ((1/fps)*1000) 
-		clock.restart();
-		window->clear();
-		window->draw(*map);
-		sprite->draw(*window, 1, 2);
-		window->display();
+		}
+
+
 	}
 }
+
+
+void GraphicEngine::updateSprites(ClassSprite* sprite, int line, int column) {
+	sprite->draw(*window, line, column);
+}
+
+void GraphicEngine::updateDrawable(sf::Drawable * t)
+{
+	window->draw(*t);
+}
+
+void GraphicEngine::clearWindow()
+{
+	window->clear();
+}
+
+void GraphicEngine::displayWindow()
+{
+	window->display();
+}
+
+
 
 
 
@@ -58,3 +93,11 @@ void GraphicEngine::setController(Controller * controller)
 {
 	this->controller = controller;
 }
+
+void GraphicEngine::testThread(int nombre)
+{
+	std::printf("Thread");
+}
+
+
+

@@ -6,4 +6,5 @@ public:
 	~WaterTiles();
 
 	virtual bool isAvailable() const;
+	virtual void toString();
 };

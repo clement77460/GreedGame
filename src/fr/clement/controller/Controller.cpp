@@ -1,5 +1,5 @@
 #include "../../../..//bin/fr/clement/controller/Controller.h"
-
+#include<iostream>
 Controller::Controller(GameEngine*  gameEngine,GraphicEngine* graphicEngine)
 {
 	this->gameEngine = gameEngine;
@@ -12,18 +12,29 @@ void Controller::onLoad()
 	gameEngine->setControllerAndView(this , graphicEngine);
 	graphicEngine->setController(this);
 
-
-	gameEngine->initTileWrapper();
 	gameEngine->initWidgets();
-	gameEngine->startGraphicEngine();
-
-
+	
+	while (gameEngine->getNbSprite() < gameEngine->getNbPlacement()) {
+		gameEngine->startPlacementState();
+	}
+	gameEngine->startGameState();
 }
 
-void Controller::onClick(int x,int y)
+bool Controller::onPlacementClick(int x,int y,std::string selectedSprite)
 {
-	printf("click de souris en x:%d et y:%d \n", x, y);
-	gameEngine->getTileClicked(x,y);
+	std::printf("click de souris en x:%d et y:%d, sprite selected : ", x, y);
+	std::cout << selectedSprite << std::endl;
+
+	return gameEngine->checkPlacementPosition(x, y, selectedSprite);
+}
+
+void Controller::timeToUpdate()
+{
+	sf::Time elapsed = clock.getElapsedTime();
+	if (elapsed.asMilliseconds() > 200) { //ToDO ((1/fps)*1000) 
+		gameEngine->updateGraphicEngine();
+		clock.restart();
+	}
 }
 
 

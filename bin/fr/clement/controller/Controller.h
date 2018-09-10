@@ -9,12 +9,15 @@ class Controller
 public:
 	Controller(GameEngine* gameEngine, GraphicEngine* graphicEngine);
 	void onLoad();
-	void onClick(int x, int y);
+	bool onClick(int x, int y,std::string selectedSprite);
+	bool onPlacementClick(int x, int y, std::string selectedSprite);
+	void timeToUpdate();
 	~Controller();
 	
 private :
 	GameEngine* gameEngine=NULL;
 	GraphicEngine* graphicEngine=NULL;
+	sf::Clock clock;
 };
 
 

@@ -6,5 +6,6 @@ public:
 	~WallTiles();
 
 	virtual bool isAvailable() const;
+	virtual void toString();
 };
 

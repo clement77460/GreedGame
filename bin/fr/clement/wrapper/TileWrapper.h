@@ -9,11 +9,17 @@ class TileWrapper:public sf::RectangleShape
 public:
 	TileWrapper();
 	~TileWrapper();
-
+	TilesInterface* getTileType();
 	void setTileType(int type);
 
-private:
+	void setCoords(int line, int column);
+	int getLine();
+	int getColumn();
 
+private:
+	TilesInterface* tileType;
+	int line;
+	int column;
 };
 
 #endif

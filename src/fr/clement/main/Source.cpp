@@ -2,13 +2,13 @@
 
 int main()
 {
-	
-	GameEngine ge;
+
+	GameEngine ge(2);
 	GraphicEngine graphicEngine;
 
 	Controller controller(&ge, &graphicEngine);
 	controller.onLoad();
-
+	
 
 	return 0;
 }

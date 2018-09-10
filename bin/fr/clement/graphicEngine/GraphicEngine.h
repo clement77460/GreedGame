@@ -13,16 +13,23 @@ class GraphicEngine
 public:
 	GraphicEngine();
 	~GraphicEngine();
-	void gameLoop(TileMap* map,ClassSprite* sprite);
+	void gameLoop();
+	void placementLoop();
 	void setController(Controller* controller);
+	void updateSprites(ClassSprite* sprite, int line, int column);
+	void updateDrawable(sf::Drawable* t);
+	void clearWindow();
+	void displayWindow();
+	void testThread(int nombre);
+	//le thread ne fonctionne pas pour les fonctions surchargées
+
 
 private:
-	sf::Clock clock;
 	sf::RenderWindow* window=NULL;
 	Controller* controller;
-	int fps = 5; //5 images par secondes
+
 	
-	void updateEngine(TileMap* map, ClassSprite* sprite);
+	
 };
 
 #endif
