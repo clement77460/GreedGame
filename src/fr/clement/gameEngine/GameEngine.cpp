@@ -2,8 +2,10 @@
 #include"../../../../bin/fr/clement/graphicEngine/GraphicEngine.h"
 #include "..\..\..\..\bin\fr\clement\gameEngine\GameEngine.h"
 
+
 #include <string>
 #include<thread>
+
 
 
 GameEngine::GameEngine(int nbPlayers)
@@ -15,6 +17,7 @@ GameEngine::GameEngine(int nbPlayers)
 		player[i].initAttributes(4); // 4 = nb de personnages du joueur 
 		std::printf("nb sprites = %d\n",player[i].getNbPlacement());
 	}
+
 }
 
 GameEngine::~GameEngine()
@@ -95,27 +98,39 @@ void GameEngine::updateGraphicEngine()
 	graphicEngine->displayWindow();
 }
 
-bool GameEngine::checkPlacementPosition(int x, int y, std::string selectedSprite)
+bool GameEngine::checkPlacementPosition(int x, int y, std::string selectedSprite,int indexPlayer)
 {
 	TileWrapper tileToCheck=getTileClicked(x, y);
 	if (tileToCheck.getTileType()->isAvailable()) {
 
 		tileToCheck.getTileType()->setSomeone(true);
-		this->player[0].createNewSprite(tileToCheck.getLine(),tileToCheck.getColumn());
-		this->player[0].increaseNbSprite();
+		this->player[indexPlayer].createNewSprite(tileToCheck.getLine(),tileToCheck.getColumn());
+		this->player[indexPlayer].increaseNbSprite();
+
+		// changement du joueur à placer / jouer
+		if (player[indexPlayer].getNbPlacement() == player[indexPlayer].getNbSprite()) {
+			this->changeTurn();
+		}
+
 		this->updateGraphicEngine();
 		return true;
 	}
+
 	return false;
 }
 
 int GameEngine::getNbPlacement()
 {
-	return player[0].getNbPlacement(); //rajouter le nb de sprite du deuxieme joueur
+	return player[0].getNbPlacement()+ player[1].getNbPlacement(); //rajouter le nb de sprite du deuxieme joueur
 }
 
 int GameEngine::getNbSprite() {
-	return player[0].getNbSprite();
+	return player[0].getNbSprite()+ player[1].getNbSprite();
+}
+
+int GameEngine::getActualPlayer()
+{
+	return playerToPlay;
 }
 
 TileWrapper GameEngine::getTileClicked(int x, int y)
@@ -144,6 +159,11 @@ void GameEngine::createMap()
 	};
 	map.loadTiles("..//image//textureSet.jpg", sf::Vector2u(100, 100), level, 8, 5, tiles);
 
+}
+
+void GameEngine::changeTurn()
+{
+	playerToPlay = (playerToPlay + 1) % 2;
 }
 
 

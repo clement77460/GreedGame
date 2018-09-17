@@ -25,7 +25,7 @@ bool Controller::onPlacementClick(int x,int y,std::string selectedSprite)
 	std::printf("click de souris en x:%d et y:%d, sprite selected : ", x, y);
 	std::cout << selectedSprite << std::endl;
 
-	return gameEngine->checkPlacementPosition(x, y, selectedSprite);
+	return gameEngine->checkPlacementPosition(x, y, selectedSprite, gameEngine->getActualPlayer());
 }
 
 void Controller::timeToUpdate()
