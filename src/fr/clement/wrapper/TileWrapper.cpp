@@ -41,16 +41,21 @@ void TileWrapper::setTileType(int type)
 
 void TileWrapper::setCoords(int line, int column)
 {
-	this->line = line+1;
-	this->column = column+1;
+	coords.setLine(line+1);
+	coords.setColumn(column+1);
+}
+
+Coordinates TileWrapper::getCoords()
+{
+	return this->coords;
 }
 
 int TileWrapper::getLine()
 {
-	return this->line;
+	return this->coords.getLine();
 }
 
 int TileWrapper::getColumn()
 {
-	return this->column;
+	return this->coords.getColumn();
 }

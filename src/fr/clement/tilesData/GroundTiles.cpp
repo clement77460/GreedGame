@@ -15,6 +15,8 @@ bool GroundTiles::isAvailable() const
 {
 	if (hasSomeone)
 		return false;
+	if (!isMovable)
+		return false;
 	return true;
 }
 

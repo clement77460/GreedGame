@@ -3,7 +3,6 @@
 
 #include"../wrapper/TileWrapper.h"
 #include"../player/Player.h"
-#include"../../../GreedGame/linkedListMovement.h"
 
 enum gameState {
 	placement,
@@ -24,16 +23,19 @@ public:
 	void initWidgets();
 	void startPlacementState();
 	void startGameState();
-	int* getAvailableTiles(int posDepart,int movement);
+
 	TileWrapper getTileClicked(int x,int y);
 	void updateGraphicEngine();
 	bool checkPlacementPosition(int x,int y,std::string selectedSprite, int indexPlayer);
 	int getNbPlacement();
 	int getNbSprite();
 	int getActualPlayer();
+	 
 
 private:
 	
+	std::vector<Coordinates> calculatingMovableTiles();
+	void recursivityMove(std::vector<Coordinates>& indexToChange, int distanceLeft,int ligneDepart,int colDepart);
 	TileWrapper** tiles=NULL;
 	Controller* controller=NULL;
 	GraphicEngine* graphicEngine = NULL;
@@ -41,9 +43,9 @@ private:
 	Player* player = NULL;
 	TileMap map;
 	gameState state = placement;
-	t_pile p;
-	int playerToPlay=0; //le premier joueur à jouer est 0 (par defaut)
 
+
+	int playerToPlay=0; //le premier joueur à jouer est 0 (par defaut)
 	int nbXTiles = 5;
 	int nbYTiles = 8;
 	

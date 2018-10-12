@@ -2,7 +2,6 @@
 #include"../../../../bin/fr/clement/graphicEngine/GraphicEngine.h"
 #include "..\..\..\..\bin\fr\clement\gameEngine\GameEngine.h"
 
-
 #include <string>
 #include<thread>
 
@@ -63,6 +62,8 @@ void GameEngine::initTileWrapper()
 void GameEngine::startPlacementState()
 {
 	
+	this->calculatingMovableTiles();
+	//Calculer les tiles dispo ici
 	this->graphicEngine->placementLoop();
 }
 
@@ -131,6 +132,52 @@ int GameEngine::getNbSprite() {
 int GameEngine::getActualPlayer()
 {
 	return playerToPlay;
+}
+
+std::vector<Coordinates> GameEngine::calculatingMovableTiles()
+{
+	int ligneDepart = 0;
+	int colDepart =0;
+	int distance = 5;
+	
+	std::vector<Coordinates> indexToChange;
+	this->recursivityMove(indexToChange,distance,ligneDepart,colDepart);
+	
+	for (int i = 0; i < indexToChange.size(); i++)
+	{
+		std::printf("[%d][%d]\n", indexToChange[i].getLine(), indexToChange[i].getColumn());
+	}
+
+	return indexToChange;
+}
+
+void GameEngine::recursivityMove(std::vector<Coordinates>& indexToChange,int distanceLeft, int ligneDepart, int colDepart)
+{
+	if (distanceLeft < 0 || ligneDepart <0 || colDepart<0) {
+
+	}
+	else {
+		Coordinates coord;
+		coord.setColumn(colDepart);
+		coord.setLine(ligneDepart);
+
+		int isPresent = 0;
+
+		for (int i = 0; i < indexToChange.size(); i++) {
+			if (coord == indexToChange[i]) {
+				isPresent = 1;
+			}
+				
+		}
+		if(!isPresent)
+			indexToChange.push_back(coord);
+
+		recursivityMove(indexToChange, distanceLeft - 1,ligneDepart,colDepart+1);//deplacement a droite
+		recursivityMove(indexToChange, distanceLeft - 1, ligneDepart, colDepart - 1);//deplacement a gauche
+		recursivityMove(indexToChange, distanceLeft - 1, ligneDepart+1, colDepart );//deplacement en haut
+		recursivityMove(indexToChange, distanceLeft - 1, ligneDepart-1, colDepart );//deplacement en bas
+
+	}
 }
 
 TileWrapper GameEngine::getTileClicked(int x, int y)

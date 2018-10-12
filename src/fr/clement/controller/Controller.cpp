@@ -15,6 +15,7 @@ void Controller::onLoad()
 	gameEngine->initWidgets();
 	
 	while (gameEngine->getNbSprite() < gameEngine->getNbPlacement()) {
+		
 		gameEngine->startPlacementState();
 	}
 	gameEngine->startGameState();

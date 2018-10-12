@@ -12,8 +12,13 @@ public:
 		this->hasSomeone = flag;
 	}
 
+	virtual void setMovable(bool flag) {
+		this->isMovable = flag;
+	}
+
 protected:
 	bool hasSomeone = false;
+	bool isMovable = true;
 };
 
 
