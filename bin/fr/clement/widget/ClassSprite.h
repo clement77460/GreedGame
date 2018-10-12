@@ -14,10 +14,18 @@ public:
 	~ClassSprite();
 	void loadTexture(const std::string& tileset);
 	void draw(sf::RenderWindow &windows,int line,int col);
+	void setLine(int line, int column);
+
+	int getLine();
+	int getColumn();
 
 private:
 	const int gapX = 32;
 	const int gapY = 48;
+
+	int line;
+	int column;
+
 	sf::Texture spriteTexture;
 	sf::Sprite sprite;
 	SpriteAnimation* anim;

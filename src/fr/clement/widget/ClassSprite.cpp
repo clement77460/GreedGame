@@ -12,6 +12,9 @@ ClassSprite::ClassSprite()
 
 ClassSprite::~ClassSprite()
 {
+	std::printf("destructeur de classSprite\n");
+	delete anim;
+	
 }
 
 void ClassSprite::loadTexture(const std::string & spriteSet)
@@ -36,4 +39,20 @@ void ClassSprite::draw(sf::RenderWindow &target,int line,int col)
 	target.draw(sprite);	
 	
 
+}
+
+void ClassSprite::setLine(int line, int column)
+{
+	this->line = line;
+	this -> column = column;
+}
+
+int ClassSprite::getLine()
+{
+	return this->line;
+}
+
+int ClassSprite::getColumn()
+{
+	return this->column;
 }

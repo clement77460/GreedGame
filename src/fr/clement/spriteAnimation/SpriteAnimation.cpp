@@ -1,5 +1,5 @@
 #include "..//..//..//..//bin/fr/clement/spriteAnimation/SpriteAnimation.h"
-
+#include<string>
 
 SpriteAnimation::SpriteAnimation()
 {
@@ -9,6 +9,7 @@ SpriteAnimation::SpriteAnimation()
 
 SpriteAnimation::~SpriteAnimation()
 {
+	std::printf("destruction de spirte Animation\n");
 }
 
 void SpriteAnimation::increaseMouvement()

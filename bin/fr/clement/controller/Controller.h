@@ -3,17 +3,21 @@
 #pragma once
 
 #include"../graphicEngine/GraphicEngine.h"
-
+#include"../gameEngine/GameEngine.h"
 class Controller
 {
 public:
-	Controller(const GameEngine &gameEngine,const GraphicEngine &graphicEngine);
+	Controller(GameEngine* gameEngine, GraphicEngine* graphicEngine);
 	void onLoad();
+	bool onClick(int x, int y,std::string selectedSprite);
+	bool onPlacementClick(int x, int y, std::string selectedSprite);
+	void timeToUpdate();
 	~Controller();
 	
 private :
-	GameEngine gameEngine;
-	GraphicEngine graphicEngine;
+	GameEngine* gameEngine=NULL;
+	GraphicEngine* graphicEngine=NULL;
+	sf::Clock clock;
 };
 
 
