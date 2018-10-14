@@ -78,8 +78,7 @@ Ajouter les composants graphique de la fenêtre
 */
 void GameEngine::updateGraphicEngine()
 {
-	//faire une boucle de updateDrawable pour afficher les cases possibles
-	//this->tiles[0][0].setFillColor(sf::Color::Color(0, 127, 255, 100));
+	//faire une boucle de updateDrawable pour afficher les cases possible
 	
 	graphicEngine->clearWindow();
 	graphicEngine->updateDrawable(&map);
@@ -95,18 +94,33 @@ void GameEngine::updateGraphicEngine()
 		ClassSprite* sprite = player[1].getSprite(i);
 		graphicEngine->updateSprites(sprite, sprite->getLine(), sprite->getColumn());
 	}
-
+	
 	graphicEngine->displayWindow();
 }
 
 bool GameEngine::checkPlacementPosition(int x, int y, std::string selectedSprite,int indexPlayer)
 {
+	std::vector<Coordinates> indexToChange;
+
 	TileWrapper tileToCheck=getTileClicked(x, y);
-	if (tileToCheck.getTileType()->isAvailable()) {
+	if (tileToCheck.getTileType()->getIsMovable()) {
 
 		tileToCheck.getTileType()->setSomeone(true);
 		this->player[indexPlayer].createNewSprite(tileToCheck.getLine(),tileToCheck.getColumn());
 		this->player[indexPlayer].increaseNbSprite();
+
+		//on remet les cases en transparent puis on recolorie les disponibles
+		for (int i = 0; i < nbXTiles; i++) {
+			for (int j = 0; j < nbYTiles; j++) {
+				indexToChange.push_back(Coordinates(i,j));
+				tiles[i][j].getTileType()->setIsMovable(false);
+			}
+		}
+
+		for (int i = 0; i < indexToChange.size(); i++)
+		{
+			map.displayingAvailableTiles(indexToChange[i], sf::Color(255, 255, 255,255));
+		}
 
 		// changement du joueur à placer / jouer
 		if (player[indexPlayer].getNbPlacement() == player[indexPlayer].getNbSprite()) {
@@ -138,15 +152,20 @@ std::vector<Coordinates> GameEngine::calculatingMovableTiles()
 {
 	int ligneDepart = 0;
 	int colDepart =0;
-	int distance = 5;
+	int distance = 2;
 	
+	printf("calculating \n");
 	std::vector<Coordinates> indexToChange;
+
+
 	this->recursivityMove(indexToChange,distance,ligneDepart,colDepart);
 	
 	for (int i = 0; i < indexToChange.size(); i++)
 	{
-		std::printf("[%d][%d]\n", indexToChange[i].getLine(), indexToChange[i].getColumn());
+		map.displayingAvailableTiles(indexToChange[i],sf::Color(255,0,0,100));
 	}
+
+	this->updateGraphicEngine();
 
 	return indexToChange;
 }
@@ -157,9 +176,7 @@ void GameEngine::recursivityMove(std::vector<Coordinates>& indexToChange,int dis
 
 	}
 	else {
-		Coordinates coord;
-		coord.setColumn(colDepart);
-		coord.setLine(ligneDepart);
+		Coordinates coord(ligneDepart, colDepart);
 
 		int isPresent = 0;
 
@@ -169,8 +186,12 @@ void GameEngine::recursivityMove(std::vector<Coordinates>& indexToChange,int dis
 			}
 				
 		}
-		if(!isPresent)
-			indexToChange.push_back(coord);
+		if (!isPresent) {
+			if (tiles[ligneDepart][colDepart].getTileType()->isAvailable()) {
+				indexToChange.push_back(coord);
+				tiles[ligneDepart][colDepart].getTileType()->setIsMovable(true);
+			}
+		}
 
 		recursivityMove(indexToChange, distanceLeft - 1,ligneDepart,colDepart+1);//deplacement a droite
 		recursivityMove(indexToChange, distanceLeft - 1, ligneDepart, colDepart - 1);//deplacement a gauche

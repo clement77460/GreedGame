@@ -16,6 +16,7 @@ bool WallTiles::isAvailable() const
 	return false;
 }
 
+
 void WallTiles::toString()
 {
 	std::printf("JE SUIS UN WALL AVEC %d SUR MOI\n", this->hasSomeone);

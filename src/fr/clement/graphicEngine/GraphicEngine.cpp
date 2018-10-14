@@ -67,6 +67,7 @@ void GraphicEngine::placementLoop()
 
 
 void GraphicEngine::updateSprites(ClassSprite* sprite, int line, int column) {
+
 	sprite->draw(*window, line, column);
 }
 
