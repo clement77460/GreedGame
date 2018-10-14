@@ -1,5 +1,12 @@
 #include "../../../../bin/fr/clement/widget/TileMap.h"
 
+/** REMOVING COLOR
+*
+*quad[0].color = sf::Color(255, 255, 255, 255);
+quad[1].color = sf::Color(255,255,255,255);
+quad[2].color = sf::Color(255, 255, 255, 255);
+quad[3].color = sf::Color(255, 255, 255, 255);
+*/
 
 TileMap::TileMap()
 {
@@ -78,7 +85,6 @@ void TileMap::setUpQuad(sf::Vertex* quad, sf::Vector2u tileSize, const int tileT
 	quad[1].position = sf::Vector2f((line + 1)*tileSize.x, (col)*tileSize.y);
 	quad[2].position = sf::Vector2f((line + 1)*tileSize.x, (col + 1)*tileSize.y);
 	quad[3].position = sf::Vector2f((line)*tileSize.x, (col + 1)*tileSize.y);
-
 	this->setTextureOnQuad(quad, tileType);
 }
 
@@ -90,6 +96,9 @@ void TileMap::setUpTiles(sf::Vector2u tileSize, const int tilesType, const int l
 	tiles[col][line].setCoords(col, line);
 }
 
+
+
+
 void TileMap::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	
@@ -99,3 +108,30 @@ void TileMap::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	target.draw(m_vertices, states);
 
 }
+
+void TileMap::displayingAvailableTiles(Coordinates coords, sf::Color color)
+{
+	//witdh=8 a voir plus précisement comment le gérer
+	int width = 8;
+
+	
+	sf::Vertex* quad = &m_vertices[(coords.getColumn()+coords.getLine() * 8) * 4];
+	this->changingColor(quad, color);
+	
+	
+}
+
+void TileMap::changingColor(sf::Vertex * quad, sf::Color color)
+{
+
+	quad[0].color = color;
+	quad[1].color = color;
+	quad[2].color = color;
+	quad[3].color = color;
+	
+
+}
+
+
+
+
