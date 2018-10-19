@@ -162,7 +162,7 @@ std::vector<Coordinates> GameEngine::calculatingMovableTiles()
 	
 	for (int i = 0; i < indexToChange.size(); i++)
 	{
-		map.displayingAvailableTiles(indexToChange[i],sf::Color(255,0,0,100));
+		map.displayingAvailableTiles(indexToChange[i],sf::Color(139,131,252,255));
 	}
 
 	this->updateGraphicEngine();

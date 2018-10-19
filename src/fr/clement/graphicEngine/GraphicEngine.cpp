@@ -5,8 +5,9 @@
 
 GraphicEngine::GraphicEngine()
 {
-	
-	this->window = new sf::RenderWindow(sf::VideoMode(800, 500), "GreedGame");
+	//800-500
+	this->window = new sf::RenderWindow(sf::VideoMode(800, 700), "GreedGame");
+	this->window->setPosition(sf::Vector2i(0, 0));
 
 }
 
@@ -73,7 +74,12 @@ void GraphicEngine::updateSprites(ClassSprite* sprite, int line, int column) {
 
 void GraphicEngine::updateDrawable(sf::Drawable * t)
 {
+	UnitFrame uf;
+	uf.loadImage();
+	uf.initFrame();
+	window->draw(uf);
 	window->draw(*t);
+	
 }
 
 void GraphicEngine::clearWindow()

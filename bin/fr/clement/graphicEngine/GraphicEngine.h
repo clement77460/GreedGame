@@ -5,7 +5,7 @@
 #include"../widget/TileMap.h"
 #include<SFML/Graphics.hpp>
 #include"../widget/ClassSprite.h"
-
+#include"../widget/UnitFrame.h"
 
 class Controller;
 class GraphicEngine
