@@ -42,6 +42,7 @@ private:
 	ClassSprite* sprite = NULL;
 	Player* player = NULL;
 	TileMap map;
+	UnitFrame downFrame;
 	gameState state = placement;
 
 

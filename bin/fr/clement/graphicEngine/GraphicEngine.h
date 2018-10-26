@@ -17,7 +17,7 @@ public:
 	void placementLoop();
 	void setController(Controller* controller);
 	void updateSprites(ClassSprite* sprite, int line, int column);
-	void updateDrawable(sf::Drawable* t);
+	void updateDrawable(sf::Drawable* t, sf::Drawable* t2);
 	void clearWindow();
 	void displayWindow();
 	void testThread(int nombre);

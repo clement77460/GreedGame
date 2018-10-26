@@ -1,5 +1,5 @@
 #include "Leaf.h"
-#include<iostream>
+
 
 template<class T,class F> 
 class Node
@@ -10,8 +10,9 @@ public:
 	Node<T, F>* getNext();
 	void addNewKey();
 	void toString();
+	Leaf<F>* getLeafs();
 
-
+	~Node();
 private:
 	Node<T, F>* next=NULL;
 	Leaf<F>* firstLeaf=NULL;
@@ -87,14 +88,32 @@ int Node<T, F>::buildingFirstLeaf(T key, F value)
 
 
 
-
 template<class T, class F>
 inline void Node<T, F>::toString()
 {
 	std::cout << "** " << this->keyValue << "\n";
 
-	//parcours de ces valeurs
-	std::cout << "-> " << this->firstLeaf->getValue() << "\n";
-	//std::cout << "-> " << this->firstLeaf->getNextLeaf()->getValue() << "\n";
+	Leaf<F>* nextLeaf = firstLeaf;
+	std::cout << "-> " << nextLeaf->getValue() << "\n";
+	
+	while (nextLeaf->getNextLeaf() != NULL) {
+		nextLeaf = nextLeaf->getNextLeaf();
+		std::cout << "-> " << nextLeaf->getValue() << "\n";
+	}
+	
+}
+
+template<class T, class F>
+inline Leaf<F>* Node<T, F>::getLeafs()
+{
+	return this->firstLeaf;
+}
+
+template<class T, class F>
+inline Node<T, F>::~Node()
+{
+	printf("deleting next Node and first Leaf \n");
+	delete[] next;
+	delete[] firstLeaf;
 }
 

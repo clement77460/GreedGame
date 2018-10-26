@@ -41,7 +41,13 @@ void GameEngine::initWidgets()
 	this->initTileWrapper();
 	this->createMap();
 
-	graphicEngine->updateDrawable(&map);
+	//init downFrame
+	downFrame.loadImage();
+	downFrame.initFrame();
+	downFrame.mapToTextVector();
+
+
+	graphicEngine->updateDrawable(&map,&downFrame);
 	graphicEngine->displayWindow();
 
 	/*std::thread th(&GraphicEngine::testThread,graphicEngine,5);//argument int
@@ -81,7 +87,7 @@ void GameEngine::updateGraphicEngine()
 	//faire une boucle de updateDrawable pour afficher les cases possible
 	
 	graphicEngine->clearWindow();
-	graphicEngine->updateDrawable(&map);
+	graphicEngine->updateDrawable(&map,&downFrame);
 
 	//refresh first player sprite
 	for (int i = 0; i < player[0].getNbSprite(); i++) {

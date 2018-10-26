@@ -72,12 +72,9 @@ void GraphicEngine::updateSprites(ClassSprite* sprite, int line, int column) {
 	sprite->draw(*window, line, column);
 }
 
-void GraphicEngine::updateDrawable(sf::Drawable * t)
+void GraphicEngine::updateDrawable(sf::Drawable* t,sf::Drawable* t2)
 {
-	UnitFrame uf;
-	uf.loadImage();
-	uf.initFrame();
-	window->draw(uf);
+	window->draw(*t2);
 	window->draw(*t);
 	
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include"../utility/PersonnalMap.h"
 #include<SFML/Graphics.hpp>
 
 class UnitFrame :public sf::Drawable, public sf::Transformable
@@ -7,9 +8,12 @@ public:
 	void loadImage();
 	void initFrame();
 	
-	void changingCharCarac(std::string key,int value);
+	void changingBarCarac(std::string barType, std::string actualValue, std::string maxValue);
+	void changingSingleCarac(std::string type, std::string value);
+	void mapToTextVector();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 	UnitFrame();
 	~UnitFrame();
 
@@ -20,20 +24,26 @@ private:
 	void buildingText(int positionStartX, int positionStartY, std::string key);
 	void buildingBackGround();
 
+	void addingTextBar(std::string s, std::string delimiter);
+	void addingTextLogo(std::string s, std::string delimiter);
+
 	sf::RectangleShape unitImage;
 	sf::RectangleShape backGround;
 
 	sf::Texture backImage;
 	sf::Texture textureImage;
 	sf::Texture textureLogo;
-		
+	
+	std::vector<sf::Text> allTexts;
 
 	std::vector<sf::VertexArray> rects;
 	std::vector<sf::RectangleShape> logos;
 
-	std::map<std::string, sf::Text> caracText;
+	PersonnalMap<std::string, sf::Text> pm;
 	
 
 	sf::Font font;
 };
+
+
 

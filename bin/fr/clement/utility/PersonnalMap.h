@@ -6,8 +6,8 @@ class PersonnalMap
 public:
 	void add(T key, F value);
 	void toString();
-
-
+	Leaf<F>* getValuesAt(T key);
+	~PersonnalMap();
 private:
 	Node<T, F>* firstNode=NULL;
 	int buildingFirstNode(T key, F value);
@@ -88,7 +88,39 @@ template<class T, class F>
  inline void PersonnalMap<T, F>::toString()
  {
 
+	 Node<T, F>* temp = firstNode;
 	 firstNode->toString();
-	 firstNode->getNext()->toString();
-	 firstNode->getNext()->getNext()->toString();
+	 while (temp->getNext() != NULL) {
+		 temp = temp->getNext();
+		 temp->toString();
+	 }
  }
+
+ template<class T, class F>
+ Leaf<F>* PersonnalMap<T, F>::getValuesAt(T key)
+ {
+	 Node<T, F>* temp = firstNode;
+	 if (temp->getKey() == key) {
+		 return temp->getLeafs();
+	 }
+	 else {
+		 while (temp->getNext() != NULL) {
+			 temp = temp->getNext();
+			 if (temp->getKey() == key) {
+				 return temp->getLeafs();
+			 }
+		 }
+	 }
+
+	 return NULL;
+ }
+
+ template<class T, class F>
+ inline PersonnalMap<T, F>::~PersonnalMap()
+ {
+	 printf("deleting first Node \n");
+	 delete[] firstNode;
+ }
+
+
+ 

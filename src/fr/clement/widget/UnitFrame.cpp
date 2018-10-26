@@ -1,4 +1,4 @@
-
+#include<iostream>
 #include "../../../../bin/fr/clement/widget/UnitFrame.h"
 
 void UnitFrame::loadImage()
@@ -47,6 +47,14 @@ void UnitFrame::initFrame() {
 	this->buildingText(500, 550, "atk");
 	this->buildingText(500, 600, "def");
 	this->buildingText(500, 650, "mvt");
+
+	this->changingBarCarac("hp","100","100");
+	this->changingBarCarac("mp", "100", "100");
+	this->changingBarCarac("ct", "100", "100");
+
+	this->changingSingleCarac("atk", "15");
+	this->changingSingleCarac("def", "10");
+	this->changingSingleCarac("mvt", "15");
 }
 
 void UnitFrame::buildingBar(int positionStartX,int positionStartY,sf::Color color)
@@ -93,6 +101,7 @@ void UnitFrame::buildingBackGround() {
 	backGround.setTexture(&backImage);
 }
 
+
 void UnitFrame::buildingText(int positionStartX, int positionStartY, std::string key)
 {
 	sf::Text text;
@@ -102,6 +111,9 @@ void UnitFrame::buildingText(int positionStartX, int positionStartY, std::string
 	text.setFillColor(sf::Color::White);
 	text.setPosition(sf::Vector2f(positionStartX, positionStartY));
 
+	pm.add(key, text);
+
+	std::cout << "adding key :" << key << "\n";
 	
 }
 
@@ -109,7 +121,7 @@ void UnitFrame::buildingBars(int positionStartX, int positionStartY, sf::Color c
 {
 	
 	
-	buildingText(positionStartX, positionStartY, barType);
+	this->buildingText(positionStartX, positionStartY, barType);
 	
 	//decalage de 20 vers le bas
 	positionStartY += 20;
@@ -124,6 +136,7 @@ void UnitFrame::buildingBars(int positionStartX, int positionStartY, sf::Color c
 
 void UnitFrame::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
+
 	states.transform *= getTransform();
 	
 
@@ -138,11 +151,74 @@ void UnitFrame::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	target.draw(logos[0], states);
 	target.draw(logos[1], states);
 	target.draw(logos[2], states);
+	
+	target.draw(allTexts[0], states);
+	target.draw(allTexts[1], states);
 
+	target.draw(allTexts[2], states);
+	target.draw(allTexts[3], states);
+
+	target.draw(allTexts[4], states);
+	target.draw(allTexts[5], states);
+
+	target.draw(allTexts[6], states);
+	target.draw(allTexts[7], states);
+	target.draw(allTexts[8], states);
+	
 	
 }
 
-void UnitFrame::changingCharCarac(std::string key, int value)
+void UnitFrame::changingBarCarac( std::string barType,std::string actualValue, std::string maxValue)
+{
+	pm.getValuesAt(barType)->getPTRValue()->setString(barType);
+	pm.getValuesAt(barType)->getNextLeaf()->getPTRValue()->setString(actualValue + "/" + maxValue);
+
+
+}
+
+void UnitFrame::changingSingleCarac(std::string type, std::string value)
+{
+	pm.getValuesAt(type)->getPTRValue()->setString(value);
+}
+
+void UnitFrame::mapToTextVector()
+{
+	allTexts.clear();
+
+	this->addingTextBar("hp>>mp>>ct",">>");
+	this->addingTextLogo("atk>>def>>mvt",">>");
+	
+}
+
+void UnitFrame::addingTextBar(std::string s,std::string delimiter)
 {
 
+	size_t pos = 0;
+	std::string token;
+	while ((pos = s.find(delimiter)) != std::string::npos) {
+		token = s.substr(0, pos);
+		allTexts.push_back(pm.getValuesAt(token)->getValue());
+		allTexts.push_back(pm.getValuesAt(token)->getNextLeaf()->getValue());
+		s.erase(0, pos + delimiter.length());
+	}
+	//ici ce sera CT en s
+	allTexts.push_back(pm.getValuesAt(s)->getValue());
+	allTexts.push_back(pm.getValuesAt(s)->getNextLeaf()->getValue());
+}
+
+void UnitFrame::addingTextLogo(std::string s, std::string delimiter)
+{
+	size_t pos = 0;
+	std::string token;
+	while ((pos = s.find(delimiter)) != std::string::npos) {
+		token = s.substr(0, pos);
+		allTexts.push_back(pm.getValuesAt(token)->getValue());
+		s.erase(0, pos + delimiter.length());
+	}
+	//ici ce sera mvt en s
+	allTexts.push_back(pm.getValuesAt(s)->getValue());
+}
+
+bool operator==(sf::Text txt1, sf::Text txt2) {
+	return false;
 }
