@@ -22,6 +22,7 @@ private:
 	void buildingLogo(int positionStartX, int positionStartY, int indice);
 	void buildingBars(int positionStartX, int positionStartY, sf::Color color, std::string barType);
 	void buildingText(int positionStartX, int positionStartY, std::string key);
+	void buildingArrows();
 	void buildingBackGround();
 
 	void addingTextBar(std::string s, std::string delimiter);
@@ -29,18 +30,18 @@ private:
 
 	sf::RectangleShape unitImage;
 	sf::RectangleShape backGround;
+	sf::RectangleShape arrow[2];
 
 	sf::Texture backImage;
 	sf::Texture textureImage;
 	sf::Texture textureLogo;
-	
+	sf::Texture texureArrow;
+
+	PersonnalMap<std::string, sf::Text> pm;
 	std::vector<sf::Text> allTexts;
 
 	std::vector<sf::VertexArray> rects;
 	std::vector<sf::RectangleShape> logos;
-
-	PersonnalMap<std::string, sf::Text> pm;
-	
 
 	sf::Font font;
 };

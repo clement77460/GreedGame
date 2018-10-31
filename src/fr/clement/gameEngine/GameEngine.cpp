@@ -5,15 +5,20 @@
 #include <string>
 #include<thread>
 
-
+/**
+*
+*	Dimension de la Map : (x,y)       = x->(0:800) y->(0:500)
+*	Dimension de unitFrame: (x,y)     = x->(0:800) y->(500:700)
+*
+*/
 
 GameEngine::GameEngine(int nbPlayers)
 {
-	player = new Player[nbPlayers];
+	this->nbPlayer = nbPlayers;
+	player = new Player[nbPlayer];
 
-
-	for (int i = 0; i < 2; i++) {
-		player[i].initAttributes(4); // 4 = nb de personnages du joueur 
+	for (int i = 0; i < nbPlayer; i++) {
+		player[i].initAttributes(3); // 4 = nb de personnages du joueur 
 		std::printf("nb sprites = %d\n",player[i].getNbPlacement());
 	}
 
@@ -89,16 +94,12 @@ void GameEngine::updateGraphicEngine()
 	graphicEngine->clearWindow();
 	graphicEngine->updateDrawable(&map,&downFrame);
 
-	//refresh first player sprite
-	for (int i = 0; i < player[0].getNbSprite(); i++) {
-		ClassSprite* sprite = player[0].getSprite(i);
-		graphicEngine->updateSprites(sprite, sprite->getLine(), sprite->getColumn());
-	}
-
-	//refresh second player sprite
-	for (int i = 0; i < player[1].getNbSprite(); i++) {
-		ClassSprite* sprite = player[1].getSprite(i);
-		graphicEngine->updateSprites(sprite, sprite->getLine(), sprite->getColumn());
+	//refresh players sprite
+	for (int n = 0; n < nbPlayer; n++) {
+		for (int i = 0; i < player[n].getNbSprite(); i++) {
+			ClassSprite* sprite = player[n].getSprite(i);
+			graphicEngine->updateSprites(sprite, sprite->getLine(), sprite->getColumn());
+		}
 	}
 	
 	graphicEngine->displayWindow();
@@ -107,46 +108,58 @@ void GameEngine::updateGraphicEngine()
 bool GameEngine::checkPlacementPosition(int x, int y, std::string selectedSprite,int indexPlayer)
 {
 	std::vector<Coordinates> indexToChange;
+	if (y < 500) {
+		TileWrapper tileToCheck = getTileClicked(x, y);
+		if (tileToCheck.getTileType()->getIsMovable()) {
 
-	TileWrapper tileToCheck=getTileClicked(x, y);
-	if (tileToCheck.getTileType()->getIsMovable()) {
+			tileToCheck.getTileType()->setSomeone(true);
+			this->player[indexPlayer].createNewSprite(tileToCheck.getLine(), tileToCheck.getColumn());
+			this->player[indexPlayer].increaseNbSprite();
 
-		tileToCheck.getTileType()->setSomeone(true);
-		this->player[indexPlayer].createNewSprite(tileToCheck.getLine(),tileToCheck.getColumn());
-		this->player[indexPlayer].increaseNbSprite();
-
-		//on remet les cases en transparent puis on recolorie les disponibles
-		for (int i = 0; i < nbXTiles; i++) {
-			for (int j = 0; j < nbYTiles; j++) {
-				indexToChange.push_back(Coordinates(i,j));
-				tiles[i][j].getTileType()->setIsMovable(false);
+			//on remet les cases en transparent puis on recolorie les disponibles
+			for (int i = 0; i < nbXTiles; i++) {
+				for (int j = 0; j < nbYTiles; j++) {
+					indexToChange.push_back(Coordinates(i, j));
+					tiles[i][j].getTileType()->setIsMovable(false);
+				}
 			}
-		}
 
-		for (int i = 0; i < indexToChange.size(); i++)
-		{
-			map.displayingAvailableTiles(indexToChange[i], sf::Color(255, 255, 255,255));
-		}
+			for (int i = 0; i < indexToChange.size(); i++)
+			{
+				map.displayingAvailableTiles(indexToChange[i], sf::Color(255, 255, 255, 255));
+			}
 
-		// changement du joueur à placer / jouer
-		if (player[indexPlayer].getNbPlacement() == player[indexPlayer].getNbSprite()) {
-			this->changeTurn();
-		}
+			// changement du joueur à placer / jouer
+			if (player[indexPlayer].getNbPlacement() == player[indexPlayer].getNbSprite()) {
+				this->changeTurn();
+			}
 
-		this->updateGraphicEngine();
-		return true;
+			this->updateGraphicEngine();
+			return true;
+		}
+		return false;
 	}
-
-	return false;
+	else {
+		std::cout << "on clique sur unitFrame" << "\n";
+		return false;
+	}
 }
 
 int GameEngine::getNbPlacement()
 {
-	return player[0].getNbPlacement()+ player[1].getNbPlacement(); //rajouter le nb de sprite du deuxieme joueur
+	int number=0;
+	for (int i = 0; i < nbPlayer; i++) {
+		number += player[i].getNbPlacement();
+	}
+	return number;
 }
 
 int GameEngine::getNbSprite() {
-	return player[0].getNbSprite()+ player[1].getNbSprite();
+	int number = 0;
+	for (int i = 0; i < nbPlayer; i++) {
+		number += player[i].getNbSprite();
+	}
+	return number;
 }
 
 int GameEngine::getActualPlayer()
@@ -158,7 +171,7 @@ std::vector<Coordinates> GameEngine::calculatingMovableTiles()
 {
 	int ligneDepart = 0;
 	int colDepart =0;
-	int distance = 2;
+	int distance = 4;
 	
 	printf("calculating \n");
 	std::vector<Coordinates> indexToChange;
@@ -237,7 +250,7 @@ void GameEngine::createMap()
 
 void GameEngine::changeTurn()
 {
-	playerToPlay = (playerToPlay + 1) % 2;
+	playerToPlay = (playerToPlay + 1) % nbPlayer;
 }
 
 

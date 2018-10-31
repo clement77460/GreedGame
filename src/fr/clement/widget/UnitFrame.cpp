@@ -18,8 +18,13 @@ void UnitFrame::loadImage()
 		// error...
 	}
 
+	if (!texureArrow.loadFromFile("..//image/Carac/Arrow.png")) {
+
+	}
+
 	textureLogo.setSmooth(true);
 	textureImage.setSmooth(true);
+	texureArrow.setSmooth(true);
 	backImage.setSmooth(true);
 		
 	
@@ -48,13 +53,15 @@ void UnitFrame::initFrame() {
 	this->buildingText(500, 600, "def");
 	this->buildingText(500, 650, "mvt");
 
+	this->buildingArrows();
+
 	this->changingBarCarac("hp","100","100");
 	this->changingBarCarac("mp", "100", "100");
 	this->changingBarCarac("ct", "100", "100");
 
 	this->changingSingleCarac("atk", "15");
 	this->changingSingleCarac("def", "10");
-	this->changingSingleCarac("mvt", "15");
+	this->changingSingleCarac("mvt", "5");
 }
 
 void UnitFrame::buildingBar(int positionStartX,int positionStartY,sf::Color color)
@@ -101,7 +108,6 @@ void UnitFrame::buildingBackGround() {
 	backGround.setTexture(&backImage);
 }
 
-
 void UnitFrame::buildingText(int positionStartX, int positionStartY, std::string key)
 {
 	sf::Text text;
@@ -115,6 +121,16 @@ void UnitFrame::buildingText(int positionStartX, int positionStartY, std::string
 
 	std::cout << "adding key :" << key << "\n";
 	
+}
+
+void UnitFrame::buildingArrows()
+{
+	for (int i = 0; i < 2; i++) {
+		arrow[i].setSize(sf::Vector2f(75, 75));
+		arrow[i].setPosition(600+(i*75), 625);
+		arrow[i].setTexture(&texureArrow);
+		arrow[i].setTextureRect(sf::IntRect(0+(i*140),0,140,140));
+	}
 }
 
 void UnitFrame::buildingBars(int positionStartX, int positionStartY, sf::Color color, std::string barType)
@@ -152,19 +168,12 @@ void UnitFrame::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	target.draw(logos[1], states);
 	target.draw(logos[2], states);
 	
-	target.draw(allTexts[0], states);
-	target.draw(allTexts[1], states);
+	for (int i = 0; i < allTexts.size(); i++) {
+		target.draw(allTexts[i], states);
+	}
 
-	target.draw(allTexts[2], states);
-	target.draw(allTexts[3], states);
-
-	target.draw(allTexts[4], states);
-	target.draw(allTexts[5], states);
-
-	target.draw(allTexts[6], states);
-	target.draw(allTexts[7], states);
-	target.draw(allTexts[8], states);
-	
+	target.draw(arrow[0], states);
+	target.draw(arrow[1], states);
 	
 }
 

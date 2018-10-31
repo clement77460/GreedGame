@@ -45,7 +45,7 @@ private:
 	UnitFrame downFrame;
 	gameState state = placement;
 
-
+	int nbPlayer;
 	int playerToPlay=0; //le premier joueur à jouer est 0 (par defaut)
 	int nbXTiles = 5;
 	int nbYTiles = 8;
