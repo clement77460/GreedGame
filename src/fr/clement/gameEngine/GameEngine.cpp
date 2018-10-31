@@ -46,9 +46,10 @@ void GameEngine::initWidgets()
 	this->initTileWrapper();
 	this->createMap();
 
+	Character* chars=player[0].getAllCharacters();
 	//init downFrame
 	downFrame.loadImage();
-	downFrame.initFrame();
+	downFrame.initFrame(chars[0].getFrameTexture());
 	downFrame.mapToTextVector();
 
 
@@ -74,13 +75,11 @@ void GameEngine::startPlacementState()
 {
 	
 	this->calculatingMovableTiles();
-	//Calculer les tiles dispo ici
 	this->graphicEngine->placementLoop();
 }
 
 void GameEngine::startGameState()
 {
-	std::printf("grameloop\n");
 	this->graphicEngine->gameLoop();
 }
 
@@ -97,7 +96,7 @@ void GameEngine::updateGraphicEngine()
 	//refresh players sprite
 	for (int n = 0; n < nbPlayer; n++) {
 		for (int i = 0; i < player[n].getNbSprite(); i++) {
-			ClassSprite* sprite = player[n].getSprite(i);
+			ClassSprite* sprite = player[n].getCharacterSprite(i);
 			graphicEngine->updateSprites(sprite, sprite->getLine(), sprite->getColumn());
 		}
 	}

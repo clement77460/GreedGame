@@ -38,7 +38,8 @@ UnitFrame::~UnitFrame()
 {
 }
 
-void UnitFrame::initFrame() {
+void UnitFrame::initFrame(sf::Texture texture) {
+	this->textureImage = texture;
 	this->buildingBackGround();
 
 	this->buildingBars(220, 550, sf::Color(252, 60, 60), "hp");

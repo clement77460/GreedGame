@@ -6,7 +6,7 @@ class UnitFrame :public sf::Drawable, public sf::Transformable
 {
 public:
 	void loadImage();
-	void initFrame();
+	void initFrame(sf::Texture texture);
 	
 	void changingBarCarac(std::string barType, std::string actualValue, std::string maxValue);
 	void changingSingleCarac(std::string type, std::string value);

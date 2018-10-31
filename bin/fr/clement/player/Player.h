@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "../widget/ClassSprite.h"
+#include"Character.h"
 
 class Player
 {
@@ -14,14 +14,18 @@ public:
 
 	void initAttributes(int number);
 	void increaseNbSprite();
-	ClassSprite* getSprite(int indice);
+	ClassSprite* getCharacterSprite(int indice);
+	sf::Texture getCharacterFrameTexture(int indice);
+	Character* getCharacter(int indice);
+	Character* getAllCharacters();
 	void createNewSprite(int line,int column);
 
 private:
 	int nbPlacement;
 	int nbSprite = 0;
 	
-	ClassSprite* sprite;
+	Character* character;
+
 };
 
 
