@@ -3,9 +3,6 @@
 
 void UnitFrame::loadImage()
 {
-	if (!textureImage.loadFromFile("..//image/sprites//warFrame.png")) {
-		
-	}
 	if (!backImage.loadFromFile("..//image/Fond//10_10.jpg")) {
 
 	}
@@ -23,7 +20,6 @@ void UnitFrame::loadImage()
 	}
 
 	textureLogo.setSmooth(true);
-	textureImage.setSmooth(true);
 	texureArrow.setSmooth(true);
 	backImage.setSmooth(true);
 		
@@ -38,8 +34,7 @@ UnitFrame::~UnitFrame()
 {
 }
 
-void UnitFrame::initFrame(sf::Texture texture) {
-	this->textureImage = texture;
+void UnitFrame::initFrame() {
 	this->buildingBackGround();
 
 	this->buildingBars(220, 550, sf::Color(252, 60, 60), "hp");
@@ -100,7 +95,7 @@ void UnitFrame::buildingLogo(int positionStartX, int positionStartY, int indice)
 void UnitFrame::buildingBackGround() {
 	unitImage.setSize(sf::Vector2f(200, 200));
 	unitImage.setPosition(0, 500);
-	unitImage.setTexture(&textureImage);
+	
 
 
 	backGround.setFillColor(sf::Color(255, 255, 255, 128));
@@ -198,6 +193,16 @@ void UnitFrame::mapToTextVector()
 	this->addingTextBar("hp>>mp>>ct",">>");
 	this->addingTextLogo("atk>>def>>mvt",">>");
 	
+}
+
+void UnitFrame::setTextureImage(sf::Texture * texture)
+{
+	unitImage.setTexture(texture);
+}
+
+sf::RectangleShape * UnitFrame::getArrows()
+{
+	return arrow;
 }
 
 void UnitFrame::addingTextBar(std::string s,std::string delimiter)

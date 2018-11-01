@@ -56,7 +56,7 @@ void GraphicEngine::placementLoop()
 				this->window->close();
 			if (ev.type == sf::Event::MouseButtonPressed) {
 				if (ev.mouseButton.button == sf::Mouse::Left) {
-					placementAccepted = controller->onPlacementClick(ev.mouseButton.x, ev.mouseButton.y, "war");
+					placementAccepted = controller->onPlacementClick(ev.mouseButton.x, ev.mouseButton.y);
 				}
 			}
 

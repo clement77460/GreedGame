@@ -18,21 +18,34 @@ void Character::attributePlace(int line, int column)
 
 void Character::initCharacter(std::string type)
 {
+	this->type = type;
+
 	if (type == "war") {
 		this->setSpriteTexture("..//image/sprites//war.png");
 		this->setFrameTexture("..//image/sprites//warFrame.png");
 	}
-	else {
-		this->setFrameTexture("..//image/sprites//mage.jpg");
+	if(type =="mage")
+	{
+		this->setSpriteTexture("..//image/sprites//mage.png");
+		this->setFrameTexture("..//image/sprites//mageFrame.png");
+	}
+	if (type == "archer") {
+		this->setSpriteTexture("..//image/sprites//archer.png");
+		this->setFrameTexture("..//image/sprites//archerFrame.png");
 	}
 	sprite.loadTexture(&spriteTexture);
 
 	
 }
 
-sf::Texture Character::getFrameTexture()
+std::string Character::getType()
 {
-	return this->frameTexture;
+	return this->type;
+}
+
+sf::Texture* Character::getFrameTexture()
+{
+	return &this->frameTexture;
 }
 
 ClassSprite* Character::getSprite()

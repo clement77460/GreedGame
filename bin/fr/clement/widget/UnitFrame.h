@@ -6,11 +6,15 @@ class UnitFrame :public sf::Drawable, public sf::Transformable
 {
 public:
 	void loadImage();
-	void initFrame(sf::Texture texture);
+	void initFrame();
 	
 	void changingBarCarac(std::string barType, std::string actualValue, std::string maxValue);
 	void changingSingleCarac(std::string type, std::string value);
 	void mapToTextVector();
+
+	void setTextureImage(sf::Texture* texture);
+
+	sf::RectangleShape* getArrows();
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -28,12 +32,12 @@ private:
 	void addingTextBar(std::string s, std::string delimiter);
 	void addingTextLogo(std::string s, std::string delimiter);
 
+
 	sf::RectangleShape unitImage;
 	sf::RectangleShape backGround;
 	sf::RectangleShape arrow[2];
 
 	sf::Texture backImage;
-	sf::Texture textureImage;
 	sf::Texture textureLogo;
 	sf::Texture texureArrow;
 

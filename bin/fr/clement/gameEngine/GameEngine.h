@@ -25,11 +25,14 @@ public:
 	void startGameState();
 
 	TileWrapper getTileClicked(int x,int y);
+	UnitFrame* getUnitFrame();
+
 	void updateGraphicEngine();
-	bool checkPlacementPosition(int x,int y,std::string selectedSprite, int indexPlayer);
+	bool checkPlacementPosition(int x,int y);
+
 	int getNbPlacement();
 	int getNbSprite();
-	int getActualPlayer();
+	Player* getActualPlayer();
 	 
 
 private:
@@ -39,7 +42,6 @@ private:
 	TileWrapper** tiles=NULL;
 	Controller* controller=NULL;
 	GraphicEngine* graphicEngine = NULL;
-	ClassSprite* sprite = NULL;
 	Player* player = NULL;
 	TileMap map;
 	UnitFrame downFrame;

@@ -6,7 +6,7 @@ int main()
 
 
 	system("pause");
-	GameEngine ge(2);
+	GameEngine ge(1);
 	GraphicEngine graphicEngine;
 
 	Controller controller(&ge, &graphicEngine);

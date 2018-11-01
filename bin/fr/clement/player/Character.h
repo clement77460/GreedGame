@@ -5,10 +5,11 @@ class Character
 public:
 	Character();
 	~Character();
-
+	
 	void attributePlace(int line, int column);
 	void initCharacter(std::string type);
-	sf::Texture getFrameTexture();
+	std::string getType();
+	sf::Texture* getFrameTexture();
 	ClassSprite* getSprite();
 
 private:
@@ -19,7 +20,7 @@ private:
 	ClassSprite sprite;
 	sf::Texture spriteTexture;
 	sf::Texture frameTexture;
-
+	std::string type;
 
 	//METTRE UN OBJ CARACTERISTIQUE ICI
 

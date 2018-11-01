@@ -46,10 +46,11 @@ void GameEngine::initWidgets()
 	this->initTileWrapper();
 	this->createMap();
 
-	Character* chars=player[0].getAllCharacters();
-	//init downFrame
+	
 	downFrame.loadImage();
-	downFrame.initFrame(chars[0].getFrameTexture());
+	downFrame.initFrame();
+	downFrame.setTextureImage(player[0].getSelectedCharacter()->getFrameTexture());
+
 	downFrame.mapToTextVector();
 
 
@@ -104,44 +105,41 @@ void GameEngine::updateGraphicEngine()
 	graphicEngine->displayWindow();
 }
 
-bool GameEngine::checkPlacementPosition(int x, int y, std::string selectedSprite,int indexPlayer)
+/**
+* Passer le joueur en parametre? suppositions pour la suite
+*/
+bool GameEngine::checkPlacementPosition(int x, int y)
 {
 	std::vector<Coordinates> indexToChange;
-	if (y < 500) {
-		TileWrapper tileToCheck = getTileClicked(x, y);
-		if (tileToCheck.getTileType()->getIsMovable()) {
+	TileWrapper tileToCheck = getTileClicked(x, y);
+	if (tileToCheck.getTileType()->getIsMovable()) {
 
-			tileToCheck.getTileType()->setSomeone(true);
-			this->player[indexPlayer].createNewSprite(tileToCheck.getLine(), tileToCheck.getColumn());
-			this->player[indexPlayer].increaseNbSprite();
+		tileToCheck.getTileType()->setSomeone(true);
+		this->player[playerToPlay].createNewSprite(tileToCheck.getLine(), tileToCheck.getColumn());
+		this->player[playerToPlay].increaseNbSprite();
 
-			//on remet les cases en transparent puis on recolorie les disponibles
-			for (int i = 0; i < nbXTiles; i++) {
-				for (int j = 0; j < nbYTiles; j++) {
-					indexToChange.push_back(Coordinates(i, j));
-					tiles[i][j].getTileType()->setIsMovable(false);
-				}
+		//on remet les cases en transparent puis on recolorie les disponibles
+		for (int i = 0; i < nbXTiles; i++) {
+			for (int j = 0; j < nbYTiles; j++) {
+				indexToChange.push_back(Coordinates(i, j));
+				tiles[i][j].getTileType()->setIsMovable(false);
 			}
-
-			for (int i = 0; i < indexToChange.size(); i++)
-			{
-				map.displayingAvailableTiles(indexToChange[i], sf::Color(255, 255, 255, 255));
-			}
-
-			// changement du joueur à placer / jouer
-			if (player[indexPlayer].getNbPlacement() == player[indexPlayer].getNbSprite()) {
-				this->changeTurn();
-			}
-
-			this->updateGraphicEngine();
-			return true;
 		}
-		return false;
+
+		for (int i = 0; i < indexToChange.size(); i++)
+		{
+			map.displayingAvailableTiles(indexToChange[i], sf::Color(255, 255, 255, 255));
+		}
+
+		// changement du joueur à placer / jouer
+		if (player[playerToPlay].getNbPlacement() == player[playerToPlay].getNbSprite()) {
+			this->changeTurn();
+		}
+
+		this->updateGraphicEngine();
+		return true;
 	}
-	else {
-		std::cout << "on clique sur unitFrame" << "\n";
-		return false;
-	}
+	return false;
 }
 
 int GameEngine::getNbPlacement()
@@ -161,9 +159,9 @@ int GameEngine::getNbSprite() {
 	return number;
 }
 
-int GameEngine::getActualPlayer()
+Player* GameEngine::getActualPlayer()
 {
-	return playerToPlay;
+	return &player[playerToPlay];
 }
 
 std::vector<Coordinates> GameEngine::calculatingMovableTiles()
@@ -230,6 +228,11 @@ TileWrapper GameEngine::getTileClicked(int x, int y)
 			}
 		}
 	}
+}
+
+UnitFrame* GameEngine::getUnitFrame()
+{
+	return &this->downFrame;
 }
 
 void GameEngine::createMap()
