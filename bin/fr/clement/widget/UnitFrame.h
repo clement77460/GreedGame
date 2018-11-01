@@ -12,6 +12,10 @@ public:
 	void changingSingleCarac(std::string type, std::string value);
 	void mapToTextVector();
 
+	void setTextureImage(sf::Texture* texture);
+
+	sf::RectangleShape* getArrows();
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	UnitFrame();
@@ -28,12 +32,12 @@ private:
 	void addingTextBar(std::string s, std::string delimiter);
 	void addingTextLogo(std::string s, std::string delimiter);
 
+
 	sf::RectangleShape unitImage;
 	sf::RectangleShape backGround;
 	sf::RectangleShape arrow[2];
 
 	sf::Texture backImage;
-	sf::Texture textureImage;
 	sf::Texture textureLogo;
 	sf::Texture texureArrow;
 

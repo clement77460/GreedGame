@@ -12,7 +12,7 @@ class ClassSprite
 public:
 	ClassSprite();
 	~ClassSprite();
-	void loadTexture(const std::string& tileset);
+	void loadTexture(const sf::Texture* texture);
 	void draw(sf::RenderWindow &windows,int line,int col);
 	void setLine(int line, int column);
 
@@ -26,7 +26,6 @@ private:
 	int line;
 	int column;
 
-	sf::Texture spriteTexture;
 	sf::Sprite sprite;
 	SpriteAnimation* anim;
 };

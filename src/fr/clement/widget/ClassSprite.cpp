@@ -17,13 +17,11 @@ ClassSprite::~ClassSprite()
 	
 }
 
-void ClassSprite::loadTexture(const std::string & spriteSet)
+void ClassSprite::loadTexture(const sf::Texture* texture)
 {
-	if (!this->spriteTexture.loadFromFile(spriteSet)) {
-		std::printf("not found");
-	}
-	spriteTexture.setSmooth(true);
-	sprite.setTexture(spriteTexture);
+
+	
+	sprite.setTexture(*texture);
 	
 	
 	
