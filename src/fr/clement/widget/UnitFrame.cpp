@@ -50,14 +50,17 @@ void UnitFrame::initFrame() {
 	this->buildingText(500, 650, "mvt");
 
 	this->buildingArrows();
+}
 
-	this->changingBarCarac("hp","100","100");
-	this->changingBarCarac("mp", "100", "100");
-	this->changingBarCarac("ct", "100", "100");
+void UnitFrame::changeCharInformations(Caracteristic * carac)
+{
+	this->changingBarCarac("hp", std::to_string(carac->getHp()), std::to_string(carac->getHpMax()));
+	this->changingBarCarac("mp", std::to_string(carac->getMp()), std::to_string(carac->getMpMax()));
+	this->changingBarCarac("ct", std::to_string(carac->getCt()), std::to_string(carac->getCtMax()));
 
-	this->changingSingleCarac("atk", "15");
-	this->changingSingleCarac("def", "10");
-	this->changingSingleCarac("mvt", "5");
+	this->changingSingleCarac("atk", std::to_string(carac->getAtk()));
+	this->changingSingleCarac("def", std::to_string(carac->getDef()));
+	this->changingSingleCarac("mvt", std::to_string(carac->getMvt()));
 }
 
 void UnitFrame::buildingBar(int positionStartX,int positionStartY,sf::Color color)

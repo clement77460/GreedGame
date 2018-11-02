@@ -4,6 +4,7 @@
 
 Character::Character()
 {
+	
 }
 
 
@@ -19,19 +20,23 @@ void Character::attributePlace(int line, int column)
 void Character::initCharacter(std::string type)
 {
 	this->type = type;
+	//caracteristic.initValues(100, 100, 100, 15, 5, 2);
 
 	if (type == "war") {
 		this->setSpriteTexture("..//image/sprites//war.png");
 		this->setFrameTexture("..//image/sprites//warFrame.png");
+		caracteristic.initValues(100, 100, 100, 15, 5, 2);
 	}
 	if(type =="mage")
 	{
 		this->setSpriteTexture("..//image/sprites//mage.png");
 		this->setFrameTexture("..//image/sprites//mageFrame.png");
+		caracteristic.initValues(100, 100, 100, 15, 5, 8);
 	}
 	if (type == "archer") {
 		this->setSpriteTexture("..//image/sprites//archer.png");
 		this->setFrameTexture("..//image/sprites//archerFrame.png");
+		caracteristic.initValues(100, 100, 100, 15, 5, 10);
 	}
 	sprite.loadTexture(&spriteTexture);
 

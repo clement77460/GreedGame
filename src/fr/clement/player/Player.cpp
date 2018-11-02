@@ -68,7 +68,6 @@ Character* Player::getSelectedCharacter()
 void Player::nextCharacter()
 {
 	charIndex=((charIndex+1)% nbPlacement);
-	std::cout << "accesing : " << charIndex;
 
 }
 
@@ -78,13 +77,11 @@ void Player::previousCharacter()
 	if (charIndex < 0) {
 		charIndex = NbCharacters - 1;
 	}
-	std::cout << "decr : " << charIndex;
 }
 
 
 void Player::createNewSprite(int line, int column)
 {
-	std::cout << this->chars[charIndex].getType() << "\n";
 	this->character[nbSprite].initCharacter(this->chars[charIndex].getType());
 	this->character[nbSprite].attributePlace(line, column);
 
