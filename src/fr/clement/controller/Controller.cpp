@@ -1,5 +1,6 @@
 #include "../../../..//bin/fr/clement/controller/Controller.h"
 #include<iostream>
+
 Controller::Controller(GameEngine*  gameEngine,GraphicEngine* graphicEngine)
 {
 	this->gameEngine = gameEngine;
@@ -21,10 +22,16 @@ void Controller::onLoad()
 	gameEngine->startGameState();
 }
 
+void Controller::createDownFrame(UnitFrame * unitFrame)
+{
+	unitFrame->loadImage();
+	unitFrame->initFrame();
+
+	this->updateDownFrame(unitFrame, gameEngine->getActualPlayer()->getSelectedCharacter());
+}
+
 bool Controller::onPlacementClick(int x,int y)
 {
-	std::printf("click de souris en x:%d et y:%d, sprite selected : ", x, y);
-
 
 	if (this->isArrowClicked(x, y)) {
 		gameEngine->updateGraphicEngine();
@@ -46,7 +53,6 @@ void Controller::timeToUpdate()
 	}
 }
 
-
 Controller::~Controller()
 {
 	std::printf("destructeur de controller\n");
@@ -59,25 +65,27 @@ bool Controller::isArrowClicked(int x, int y)
 	sf::RectangleShape *arrow = unitFrame->getArrows();
 
 	if (arrow[0].getGlobalBounds().contains(x, y)) {
-		std::cout << "decrease";
 		Player* actualPlayer=gameEngine->getActualPlayer();
 		actualPlayer->previousCharacter();
 
-		Character* charToDisplay= actualPlayer->getSelectedCharacter();
-		unitFrame->setTextureImage(charToDisplay->getFrameTexture());
-
+		this->updateDownFrame(unitFrame, actualPlayer->getSelectedCharacter());
 		return true;
 	}
 	if (arrow[1].getGlobalBounds().contains(x, y)) {
-		std::cout << "increase";
 		Player* actualPlayer = gameEngine->getActualPlayer();
 		actualPlayer->nextCharacter();
 
-		Character* charToDisplay = actualPlayer->getSelectedCharacter();
-		unitFrame->setTextureImage(charToDisplay->getFrameTexture());
-
+		this->updateDownFrame(unitFrame,actualPlayer->getSelectedCharacter());
 		return true;
 	}
 
 	return false;
 }
+
+void Controller::updateDownFrame(UnitFrame* unitFrame,Character * character)
+{
+	unitFrame->setTextureImage(character->getFrameTexture());
+	unitFrame->changeCharInformations(character->getCarac());
+	unitFrame->mapToTextVector();
+}
+

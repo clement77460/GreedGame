@@ -46,13 +46,7 @@ void GameEngine::initWidgets()
 	this->initTileWrapper();
 	this->createMap();
 
-	
-	downFrame.loadImage();
-	downFrame.initFrame();
-	downFrame.setTextureImage(player[0].getSelectedCharacter()->getFrameTexture());
-
-	downFrame.mapToTextVector();
-
+	controller->createDownFrame(&this->downFrame);
 
 	graphicEngine->updateDrawable(&map,&downFrame);
 	graphicEngine->displayWindow();

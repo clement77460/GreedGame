@@ -1,5 +1,6 @@
 #pragma once
 #include"../utility/PersonnalMap.h"
+#include"../player/Caracteristic.h"
 #include<SFML/Graphics.hpp>
 
 class UnitFrame :public sf::Drawable, public sf::Transformable
@@ -7,21 +8,19 @@ class UnitFrame :public sf::Drawable, public sf::Transformable
 public:
 	void loadImage();
 	void initFrame();
-	
-	void changingBarCarac(std::string barType, std::string actualValue, std::string maxValue);
-	void changingSingleCarac(std::string type, std::string value);
+	void changeCharInformations(Caracteristic* carc);
 	void mapToTextVector();
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	void setTextureImage(sf::Texture* texture);
-
 	sf::RectangleShape* getArrows();
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	UnitFrame();
 	~UnitFrame();
 
 private:
+	void changingBarCarac(std::string barType, std::string actualValue, std::string maxValue);
+	void changingSingleCarac(std::string type, std::string value);
 	void buildingBar(int positionStartX, int positionStartY,sf::Color color);
 	void buildingLogo(int positionStartX, int positionStartY, int indice);
 	void buildingBars(int positionStartX, int positionStartY, sf::Color color, std::string barType);
